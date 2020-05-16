@@ -2,6 +2,8 @@
 using SlackBotMessages;
 using System.Web.Http;
 using SlackBotMessages.Models;
+using System.Linq;
+using System;
 
 namespace ShuffleBot.Controllers.API
 {
@@ -9,24 +11,27 @@ namespace ShuffleBot.Controllers.API
     {
         public IHttpActionResult Shuffle()
         {
-            var WebHookUrl = "https://hooks.slack.com/services/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";
+            var WebHookUrl = "https://hooks.slack.com/services/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";
 
             var client = new SbmClient(WebHookUrl);
 
-            var list = "Jack, Ryan, Tin, Mike, Rui, Josh";
+            var shuffleList = ("Jack,Ryan,Tin,Josh").Split(',').ToList().OrderBy(a => Guid.NewGuid()).ToList();
 
+            var dayOffList = "Mike, Rui";
             var reminder = "@channel Please do not forget to update your remaining points on the card that you are working on.";
 
-			var message = new Message("");
+			var message = new Message(System.DateTime.Now.Date.ToString("MMMM dd"));
             message.AddAttachment(new Attachment()
-                .AddField("Date", System.DateTime.Now.Date.ToString("MMMM dd"), true)
-                .AddField("Standup Order", list, true)
+                .AddField("Day-off Today:", dayOffList, true)
+                .AddField("Standup Order", String.Join(", ", shuffleList), true)
                 .AddField("Reminder", reminder)
             );
 
             client.Send(message);
             return Ok();
         }
+
+
 
     }
 }
