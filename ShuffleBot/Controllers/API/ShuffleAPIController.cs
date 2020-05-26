@@ -54,7 +54,7 @@ namespace ShuffleBot.Controllers.API
 
         public IHttpActionResult Shuffle()
         {
-            var WebHookUrl =  WebConfigurationManager.AppSettings["WebHookUrlTest"];            
+            var WebHookUrl =  WebConfigurationManager.AppSettings["WebHookUrlProd"];            
             var client = new SbmClient(WebHookUrl);
             var staffList = WebConfigurationManager.AppSettings["StaffList"];
             var shuffleList = staffList.Split(',').ToList().OrderBy(a => Guid.NewGuid()).ToList();
@@ -66,16 +66,18 @@ namespace ShuffleBot.Controllers.API
             var dayOffList = "";
             var index = 1;
 
-            foreach (var item in attandanceRecordList.data)
+            if (attandanceRecordList.data != null)
             {
-                if (item.duration.ToLower() == "full day" && item.reason.ToLower() != "tech investigation")
+                foreach (var item in attandanceRecordList.data)
                 {
-                    dayOffList += item.name;
-                    if (index < attandanceRecordList.data.Count()) dayOffList += (", ");
+                    if (item.duration.ToLower() == "full day" && item.reason.ToLower() != "tech investigation")
+                    {
+                        dayOffList += item.name;
+                        if (index < attandanceRecordList.data.Count()) dayOffList += (", ");
+                    }
+                    index++;
                 }
-                index++;
             }
-
             var shuffleListNoDayOff = shuffleList.Except(dayOffList.Replace(", ", ",").Split(',').ToList()).ToList();
             var reminder = "@channel Please don't forget to update your remaining points on the card that you are working on.";
 
