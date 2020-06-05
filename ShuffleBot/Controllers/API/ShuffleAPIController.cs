@@ -70,7 +70,7 @@ namespace ShuffleBot.Controllers.API
             {
                 foreach (var item in attandanceRecordList.data)
                 {
-                    if (item.duration.ToLower() == "full day" && item.reason.ToLower() != "tech investigation")
+                    if ((item.duration.ToLower() == "full day" && item.reason.ToLower() != "tech investigation") || item.duration.ToLower() == "7.5 hours")
                     {
                         dayOffList += item.name;
                         if (index < attandanceRecordList.data.Count()) dayOffList += (", ");
