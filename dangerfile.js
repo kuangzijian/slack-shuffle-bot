@@ -1,6 +1,4 @@
-if (!(danger.github.pr.body.includes('amaabca.visualstudio.com') ||
-    danger.github.pr.body.includes('dev.azure.com') ||
-    danger.github.pr.body.includes('app.opsgenie.com'))) {
+if (!(danger.github.pr.body.includes('AB#'))) {
   fail('Please provide a link to the relevant card in the Pull Request description 💩')
 }
 
