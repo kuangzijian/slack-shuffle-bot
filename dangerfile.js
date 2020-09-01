@@ -5,7 +5,7 @@ if ((prBody.match(adoLink_regex)===null)) {
   fail('Please provide a link to the relevant card in the Pull Request description 💩')
 }
 
-if (!(prBody.includes('Type of Change'))) {
+if (!(prBody.includes('Functional change') && prBody.includes('Bug fix'))) {
   fail('Please specify the type of change in the Pull Request description 💩')
 }
 
