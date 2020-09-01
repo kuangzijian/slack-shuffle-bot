@@ -1,4 +1,4 @@
-const LINE_LIMIT = 500
+const LINE_LIMIT = 5
 
 var totalLines = danger.github.pr.additions + danger.github.pr.deletions
 if (!danger.github.pr.body.includes('[IGNORE_LINE_LIMIT]') && totalLines > LINE_LIMIT) {
